@@ -1,0 +1,85 @@
+{% extends "index.html" %} {% load static %} {% load split %} {% block style %}
+<style>
+  .slick-track {
+    width: 100% !important;
+  }
+</style>
+{% endblock style %} {% block main %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+  <div class="container">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'Home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'Blogs' %}">Blogs</a></li>
+      <li class="breadcrumb-item active">Blog details</li>
+    </ul>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Single News Start-->
+<div class="single-news">
+  <div class="container">
+    {% if request.user.id == user.id %}
+    <div class="text-right">
+      <button class="btn">
+        <a href="{% url 'UpdateBlog' blog.id %}">Update</a>
+      </button>
+      <button class="btn">
+        <a id="delete" href="{% url 'DeleteBlog' blog.id %}">Delete</a>
+      </button>
+    </div>
+    {% endif %}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="sn-container">
+          <div class="sn-img">
+            <img src="{{ blog.urlToImage }}" />
+          </div>
+          <div class="sn-content">
+            <h1 class="sn-title">{{ blog.title }}</h1>
+            {% with blog.content|split:". " as contents %} 
+                {% for content in contents %}
+                {% if forloop.last %}
+                    <p>{{ content }}</p>
+                {% else %}
+                    <p>{{ content }}.</p>
+                {% endif %}
+                {% endfor %} 
+            {% endwith %}
+          </div>
+        </div>
+        <div>
+          <h4>{{ blog.date_created }} - Posted By {{ user.first_name }} {{ user.last_name }}</h4>
+        </div>
+        <div class="sn-related mt-5">
+          <h2>Related Blogs</h2>
+          <div class="row sn-slider">
+            {% for blog in related %}
+            <div class="col-md-4">
+              <div class="sn-img">
+                <img width="400" height="400" src="{{ blog.urlToImage }}" />
+                <div class="sn-title">
+                  <a href="{% url 'BlogDetails' blog.id %}">{{ blog.title }}</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Single News End-->
+{% endblock main %} {% block script %}
+<script>
+  $(document).ready(function (event) {
+    $("#delete").click(function (event) {
+      if (!confirm("Are you sure you want to delete this post?")) {
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+{% endblock script %}

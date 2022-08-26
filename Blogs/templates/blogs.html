@@ -1,0 +1,43 @@
+{% extends "index.html" %} {% load static %} {% block main %}
+<!-- Top News Start-->
+<div class="top-news">
+  <div class="container">
+    <div class="text-right">
+      <button class="btn">
+        <a href="{% url 'AddBlog' %}">Add Blogs</a>
+      </button>
+    </div>
+    {% if blogs %}
+      {% for blog in blogs %}
+      <div class="row">
+        {% for blogdetail in blog.row %}
+        <div class="col-md-6 tn-left">
+          <div class="row tn-slider">
+            <div class="col-md-12">
+              <div class="tn-img">
+                <img width="400" height="400" src="{{ blogdetail.urlToImage }}" />
+                <div class="tn-title">
+                  <a href="{% url 'BlogDetails' blogdetail.id %}"
+                    >{{ blogdetail.title }}</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="col-md-12 tn-left">
+        <div class="row tn-slider">
+          <div class="col-md-12 my-4">
+            <h4 class="text-center">No Blogs Available</h4>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+<!-- Top News End-->
+{% endblock main %}

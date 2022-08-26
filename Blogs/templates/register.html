@@ -1,0 +1,76 @@
+{% extends "index.html" %} {% load static %} {% block main %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+  <div class="container">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'Home' %}">Home</a></li>
+      <li class="breadcrumb-item active">Register</li>
+    </ul>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Contact Start -->
+<div class="contact">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <div class="contact-form">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                {{ register.username }}
+                <span class="text-danger"
+                  >{{ register.username.errors | striptags }}</span
+                >
+              </div>
+              <div class="form-group col-md-5">
+                {{ register.email }}
+                <span class="text-danger"
+                  >{{ register.email.errors | striptags }}</span
+                >
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                {{ register.first_name }}
+                <span class="text-danger"
+                  >{{ register.first_name.errors | striptags }}</span
+                >
+             
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                {{ register.password1 }}
+                <span class="text-danger"
+                  >{{ register.password1.errors | striptags }}</span
+                >
+              </div>
+              <div class="form-group col-md-5">
+                {{ register.password2 }}
+                <span class="text-danger"
+                  >{{ register.password2.errors | striptags }}</span
+                >
+              </div>
+            </div>
+            <div><button class="btn" type="submit">Register</button></div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-4 register-div">
+        <div class="contact-info">
+          <h3>Register</h3>
+          <p>
+            Welcome to the News and Blog Website.
+          </p>
+        </div>
+        <div>
+          Already have an account? <a href="{% url 'login' %}">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Contact End -->
+{% endblock main %}
